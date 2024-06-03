@@ -12,7 +12,7 @@ env = os.environ
 class PGConnection:
     def __init__(self):
         self.conn = psycopg2.connect(
-            database="dpdiffusion"
+            database="mydb"
             ,user = "postgres"
             ,host = env["POSTGRES_HOST"]
             ,password = env["POSTGRES_PASSWORD"]
