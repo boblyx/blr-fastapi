@@ -11,7 +11,6 @@ import time
 import logging
 from uuid import uuid4
 
-from dotenv import dotenv_values
 from fastapi import FastAPI, Request, HTTPException, status, Response, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
