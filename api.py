@@ -10,14 +10,32 @@ import json
 import time
 import logging
 from uuid import uuid4
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request, HTTPException, status, Response, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.encoders import jsonable_encoder
 
 import uvicorn
 
 sys.path.append(os.path.join(os.getcwd(), "packages"))
 from Models import Object
+
+logger = logging.getLogger('uvicorn.error')
+logger.setLevel(logging.DEBUG)
+
+persist_obj = {}
+
+@asynccontextmanager
+async def lifespan(app : FastAPI):
+    logger.debug("Running on http://%s:%s" % (host, str(port)))
+    persist_obj['current'] = """
+            This is my global, persistent object,
+            that can be referenced across all routes.
+            """
+    yield
+    persist_obj.clear()
+    return
 
 app = FastAPI()
 env = os.environ
@@ -36,9 +54,16 @@ app.add_middleware(
 
 @router.get("/")
 def root():
-    """ Returns health
+    """ Returns health of the server.
     """
     return "api"
+
+@router.get("/api/v1/test")
+def test(obj : Object):
+    """ Converts given object into a string.
+    """
+    obj_dict = jsonable_encoder(obj)
+    return json.dumps(obj_dict)
 
 app.include_router(router)
 
