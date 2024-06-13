@@ -1,8 +1,8 @@
 """
 api.py
 
-© 2024, Bob Lee
 """
+__author__ = "Your Name"
 
 import os
 import sys
@@ -21,12 +21,10 @@ sys.path.append(os.path.join(os.getcwd(), "packages"))
 from Models import Object
 
 app = FastAPI()
-env = dotenv_values(".env."+os.environ["NODE_ENV"])
+env = os.environ
 router = APIRouter(prefix=env["BASE_PATH"])
-host = env["JOB_HOST"]
-port = int(env["JOB_PORT"])
-
-SERVICE_URL = env["PROTOCOL"] + env["SERVICE_URL"] + ":" + env["SERVICE_PORT"]
+host = env["API_HOST"]
+port = int(env["API_PORT"])
 
 origins = ["*"]
 app.add_middleware(
@@ -46,5 +44,5 @@ def root():
 app.include_router(router)
 
 if __name__=="__main__":
-    uvicorn.run("api:app",host=env["SELF_INTERFACE"], port = port, log_level="info", reload=True)
+    uvicorn.run("api:app",host=host, port = port, log_level="info", reload=True)
     logging.info("Running on http://%s:%s" % (host, str(port)))

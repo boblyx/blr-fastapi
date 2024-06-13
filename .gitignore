@@ -1,0 +1,7 @@
+venv
+**/venv/*
+__pycache__
+**/pycache/__
+out
+**/out/*
+!out/.gitignore
