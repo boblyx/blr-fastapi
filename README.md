@@ -3,12 +3,16 @@
 - Describe solution here
 
 ## Usage
-1. To develop, edit `dev.sh` for environment variables:
-1. To start the dev server:
+1. Install all dependencies
+```bash
+pip install -r requirements.txt
+```
+2. Edit `dev.sh` for environment variables:
+3. To start the dev server:
 ```bash
 bash dev.sh
 ```
-1. To start the production server:
+4. To start the production server:
 ```bash
 bash start.sh
 ```
