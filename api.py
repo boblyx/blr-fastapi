@@ -37,7 +37,7 @@ async def lifespan(app : FastAPI):
     persist_obj.clear()
     return
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 env = os.environ
 router = APIRouter(prefix=env["BASE_PATH"])
 host = env["API_HOST"]
@@ -56,7 +56,7 @@ app.add_middleware(
 def root():
     """ Returns health of the server.
     """
-    return "api"
+    return persist_obj["current"]
 
 @router.get("/api/v1/test")
 def test(obj : Object):
