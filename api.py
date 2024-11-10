@@ -19,7 +19,7 @@ from fastapi.encoders import jsonable_encoder
 import uvicorn
 
 sys.path.append(os.path.join(os.getcwd(), "packages"))
-from Models import Object
+from Models.Object import Obj
 
 logger = logging.getLogger('uvicorn.error')
 logger.setLevel(logging.DEBUG)
@@ -38,8 +38,10 @@ async def lifespan(app : FastAPI):
     return
 
 app = FastAPI(lifespan=lifespan)
+subapp = FastAPI()
+
 env = os.environ
-router = APIRouter(prefix=env["BASE_PATH"])
+#router = APIRouter(prefix=env["BASE_PATH"])
 host = env["API_HOST"]
 port = int(env["API_PORT"])
 
@@ -52,20 +54,21 @@ app.add_middleware(
         allow_headers = ["*"]
         )
 
-@router.get("/")
+@subapp.get("/")
 def root():
     """ Returns health of the server.
     """
     return persist_obj["current"]
 
-@router.get("/api/v1/test")
-def test(obj : Object):
+@subapp.post("/api/v1/test")
+def test(obj : Obj):
     """ Converts given object into a string.
     """
     obj_dict = jsonable_encoder(obj)
     return json.dumps(obj_dict)
 
-app.include_router(router)
+#app.include_router(router)
+app.mount(env["BASE_PATH"], subapp)
 
 if __name__=="__main__":
     uvicorn.run("api:app",host=host, port = port, log_level="info", reload=True)
