@@ -4,3 +4,6 @@ httpx
 aiofiles
 aiohttp
 python-multipart
+
+pytest
+pytest-dotenv

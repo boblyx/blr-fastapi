@@ -58,7 +58,7 @@ def root(request: Request):
     return request.state.persist_obj
 
 @main_app.get("/api/v1/test")
-def test(obj : Object):
+def test(obj : Obj):
     """ Converts given object into a string.
     """
     obj_dict = jsonable_encoder(obj)
