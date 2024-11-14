@@ -23,7 +23,7 @@ def test(request: Request):
     return request.state.persist_obj
 
 @sub_app.post("/add")
-def add(obj: Object):
+def add(obj: Obj):
     """Adds object
     """
     return obj
