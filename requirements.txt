@@ -1,2 +1,6 @@
 fastAPI
 uvicorn
+httpx
+aiofiles
+aiohttp
+python-multipart

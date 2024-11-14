@@ -3,11 +3,15 @@
 - Describe solution here
 
 ## Usage
+1. Create venv
+```bash
+python -m venv venv
+```
 1. Install all dependencies
 ```bash
 pip install -r requirements.txt
 ```
-2. Edit `dev.sh` for environment variables:
+2. Save `sample.env` to `.env.dev` and edit accordingly for environment variables:
 3. To start the dev server:
 ```bash
 bash dev.sh
