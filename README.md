@@ -11,7 +11,11 @@ python -m venv venv
 ```bash
 pip install -r requirements.txt
 ```
-2. Save `sample.env` to `.env.dev` and edit accordingly for environment variables:
+2. Save `sample.env` to `.env.dev` and edit accordingly for environment variables. Convenience script init-env.sh helps with this.
+```bash
+bash init-env.sh
+```
+
 3. To start the dev server:
 ```bash
 bash dev.sh

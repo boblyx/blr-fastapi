@@ -34,10 +34,15 @@ async def lifespan(app : FastAPI):
     persist_obj.clear()
     return
 
-app = FastAPI(lifespan=lifespan)
+env = os.environ
+TITLE = "Sample API"
+APP_DESC =f"""## Sub Apps:
+- [{env["BASE_PATH"]}]({env["BASE_PATH"]}/docs): Main API docs
+- [{env["SUB_PATH"]}]({env["SUB_PATH"]}/docs): Sub API docs
+"""
+app = FastAPI(title=TITLE, description=APP_DESC, lifespan=lifespan)
 subapp = FastAPI()
 
-env = os.environ
 host = env["API_HOST"]
 port = int(env["API_PORT"])
 main_app = FastAPI(root_path = env["BASE_PATH"])
@@ -57,7 +62,7 @@ def root(request: Request):
     """
     return request.state.persist_obj
 
-@main_app.get("/api/v1/test")
+@main_app.post("/api/v1/test")
 def test(obj : Obj):
     """ Converts given object into a string.
     """
